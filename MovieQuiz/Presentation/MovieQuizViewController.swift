@@ -140,9 +140,9 @@ final class MovieQuizViewController: UIViewController {
  
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         let currentQuestion = questions[currentQuestionIndex]
         show(quiz: convert(model: currentQuestion))
-        super.viewDidLoad()
     }
     
 }
