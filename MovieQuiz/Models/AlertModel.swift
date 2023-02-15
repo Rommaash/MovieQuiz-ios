@@ -1,6 +1,6 @@
 import UIKit
 
-public struct AlertModel{
+struct AlertModel{
     var title: String
     var message: String
     var buttonText: String
