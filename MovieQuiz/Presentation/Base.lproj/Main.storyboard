@@ -115,16 +115,22 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3q0-k5-Biv">
+                                <rect key="frame" x="177.66666666666666" y="396" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="black"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Fkf-AC-k5T" secondAttribute="trailing" constant="20" id="GAi-2Z-eEX"/>
+                            <constraint firstItem="3q0-k5-Biv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="awa-kY-rOP"/>
+                            <constraint firstItem="3q0-k5-Biv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="eFy-eY-kEf"/>
                             <constraint firstItem="Fkf-AC-k5T" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="l0u-X7-kD2"/>
                             <constraint firstItem="Fkf-AC-k5T" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="zcQ-gt-nEO"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="3q0-k5-Biv" id="0JT-yL-NT2"/>
                         <outlet property="counterLabel" destination="za1-8L-IJu" id="une-TX-Heg"/>
                         <outlet property="imageView" destination="ZwS-Rr-e5b" id="HgX-wh-KHh"/>
                         <outlet property="noButton" destination="Ssh-Sc-JbV" id="Us1-j0-sad"/>
