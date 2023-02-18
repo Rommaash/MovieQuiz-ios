@@ -43,12 +43,11 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private func showNetworkError(message: String){
         let model = AlertModel(title: "Ошибка",
                                message: message,
-                               buttonText: "Попробовать еще раз")
-        { [weak self] in
+                               buttonText: "Попробовать еще раз",
+                               completion: { [weak self] in
             guard let self = self else {return}
             self.restartGame()
-            self.questionFactory?.loadData()
-        }
+        })
         alertPresenter?.showAlert(model: model)
     }
     
@@ -116,6 +115,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         } else {
             currentQuestionIndex += 1
             questionFactory?.requestNextQuestion()
+            
         }
     }
     
@@ -162,6 +162,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         showLoadingIndicator()
         questionFactory?.loadData()
         alertPresenter = AlertPresenter(delegate: self)
+        statisticService = StatisticServiceImplementation()
+        
     }
     
 }
