@@ -12,20 +12,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBAction private func noButtonClicked(_ sender: UIButton) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let givenAnswer = false
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-    }
-    @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        guard let currentQuestion = currentQuestion else {
-            return
-        }
-        let givenAnswer = true
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-    }
+
+
     @IBOutlet private var yesButton: UIButton!
     @IBOutlet private var noButton: UIButton!
     @IBOutlet private var counterLabel: UILabel!
@@ -107,7 +95,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         }
     }
     
-    private func showAnswerResult(isCorrect: Bool) {
+func showAnswerResult(isCorrect: Bool) {
         if isCorrect {
             correctAnswers += 1
         }
@@ -143,6 +131,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.viewController = self
         imageView.layer.cornerRadius = 20
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         statisticService = StatisticServiceImplementation()
@@ -150,6 +139,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         questionFactory?.loadData()
         alertPresenter = AlertPresenter(delegate: self)
     }
+    
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
+           presenter.currentQuestion = currentQuestion
+           presenter.yesButtonClicked()
+       }
+    @IBAction private func noButtonClicked(_ sender: UIButton) {
+           presenter.currentQuestion = currentQuestion
+           presenter.noButtonClicked()
+       }
     
 }
 
