@@ -3,15 +3,15 @@ import UIKit
 
 final class MovieQuizPresenter: QuestionFactoryDelegate {
     
-    private weak var viewController: MovieQuizViewController?
+    private weak var viewController: MovieQuizViewControllerProtocol?
     private var questionFactory: QuestionFactoryProtocol?
     private var statisticService: StatisticService?
     private var currentQuestion: QuizQuestion?
     var alertPresenter: AlertPresenter?
     
-    init(viewController: MovieQuizViewControllerProtocol) {
-        self.viewController = viewController as? MovieQuizViewController
-        alertPresenter = AlertPresenter(viewController: viewController as? UIViewController)
+    init(viewController: MovieQuizViewControllerProtocol, alertPresenter: AlertPresenter) {
+        self.viewController = viewController
+        self.alertPresenter = alertPresenter
         statisticService = StatisticServiceImplementation()
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         questionFactory?.loadData()
@@ -41,6 +41,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         DispatchQueue.main.async { [weak self] in
             self?.viewController?.hideLoadingIndicator()
             self?.viewController?.show(quiz: viewModel)
+            self?.viewController?.switchButtons(isEnabled: true)
         }
         
     }
@@ -68,9 +69,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         
         showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
-    
-    
-    
     
     private func isLastQuestion() -> Bool {
         currentQuestionIndex == questionsAmount - 1
@@ -128,13 +126,11 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     private func showAnswerResult(isCorrect: Bool) {
         didAnswer(isCorrect: isCorrect)
-        
+        self.viewController?.switchButtons(isEnabled: false)
         viewController?.highlightImageBorder(isCorrect: isCorrect)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
             self.showNextQuestionOrResults()
-            self.viewController?.imageView.layer.borderWidth = 0
-            self.viewController?.unlockedButton()
         }
         
     }

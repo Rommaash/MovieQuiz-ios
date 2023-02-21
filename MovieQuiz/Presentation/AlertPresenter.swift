@@ -5,11 +5,11 @@ protocol AlertPresenterProtocol {
 }
 
 final class AlertPresenter{
-    weak private var viewController: UIViewController?
+    private weak var viewController: UIViewController?
     
-    init(viewController: UIViewController?) {
-            self.viewController = viewController
-        }
+    init(viewController: UIViewController) {
+        self.viewController = viewController
+    }
     
     func showAlert(model: AlertModel) {
         print("SHOW")
@@ -24,6 +24,6 @@ final class AlertPresenter{
             }
         alert.addAction(action)
         viewController?.present(alert, animated: true, completion: nil)
-       
+        
     }
 }
