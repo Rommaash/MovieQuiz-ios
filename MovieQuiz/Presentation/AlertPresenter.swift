@@ -1,10 +1,14 @@
 import UIKit
 
-final class AlertPresenter: AlertPresenterProtocol{
-    weak private var delegate: UIViewController?
+protocol AlertPresenterProtocol {
     
-    init(delegate: UIViewController?) {
-        self.delegate = delegate
+}
+
+final class AlertPresenter{
+    private weak var viewController: UIViewController?
+    
+    init(viewController: UIViewController) {
+        self.viewController = viewController
     }
     
     func showAlert(model: AlertModel) {
@@ -19,7 +23,7 @@ final class AlertPresenter: AlertPresenterProtocol{
                 model.completion()
             }
         alert.addAction(action)
-        delegate?.present(alert, animated: true, completion: nil)
-       
+        viewController?.present(alert, animated: true, completion: nil)
+        
     }
 }
